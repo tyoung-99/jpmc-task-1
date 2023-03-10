@@ -51,9 +51,12 @@ if __name__ == "__main__":
     for _ in iter(range(N)):
         quotes = json.loads(urllib.request.urlopen(QUERY.format(random.random())).read())
 
+        stocks = []
         prices = {}
         for quote in quotes:
-            stock, bid_price, ask_price, prices[stock] = getDataPoint(quote)
-            print("Quoted %s at (bid:%s, ask:%s, price:%s)" % (stock, bid_price, ask_price, prices[stock]))
+            stock, bid_price, ask_price, price = getDataPoint(quote)
+            stocks.append(stock)
+            prices[stock] = price
+            print("Quoted %s at (bid:%s, ask:%s, price:%s)" % (stock, bid_price, ask_price, price))
 
-        print("Ratio %s" % getRatio(prices["ABC"], prices["DEF"]))
+        print("Ratio %s" % getRatio(prices[stocks[0]], prices[stocks[1]]))
